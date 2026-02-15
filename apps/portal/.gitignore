@@ -14,15 +14,15 @@
 /coverage
 
 # next.js (build output)
-/.next/
-/out/
+.next/
+out/
 
 # turborepo
-/.turbo
+.turbo/
 
 # production build artifacts
-/build
-/dist
+build/
+dist/
 
 # misc
 .DS_Store
