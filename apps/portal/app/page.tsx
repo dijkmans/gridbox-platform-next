@@ -1,4 +1,4 @@
-﻿import { getHealth } from "../lib/api";
+﻿import { getHealth } from "../src/lib/api";
 
 export default async function Home() {
   const health = await getHealth();
@@ -11,3 +11,5 @@ export default async function Home() {
     </main>
   );
 }
+
+

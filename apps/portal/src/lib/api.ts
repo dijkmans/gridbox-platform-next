@@ -1,4 +1,4 @@
-﻿import { getApiOrigin, getDataMode } from "./env";
+import { getApiOrigin, getDataMode } from "./env";
 import { getJson } from "./http";
 
 export type Health = { ok: boolean; service?: string };

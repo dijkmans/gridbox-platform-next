@@ -1,4 +1,4 @@
-﻿export type DataMode = "live" | "mock";
+export type DataMode = "live" | "mock";
 
 export function getApiOrigin(): string {
   const v = process.env.NEXT_PUBLIC_API_ORIGIN;
