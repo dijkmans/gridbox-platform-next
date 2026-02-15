@@ -44,10 +44,6 @@ export default async function Home() {
               <p className="text-2xl font-mono font-bold text-slate-800">{health.service}</p>
             </div>
           </div>
-          
-          <footer className="mt-12 pt-6 border-t border-slate-50 text-center text-xs text-slate-400 font-medium italic">
-             Laatste sync: {new Date().toLocaleTimeString()}
-          </footer>
         </main>
       </div>
     </div>
