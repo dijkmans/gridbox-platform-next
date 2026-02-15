@@ -5,17 +5,22 @@ import { heartbeat } from "./heartbeat.mjs";
 export async function main() {
   const cfg = getConfig();
   const PORT = 8787;
+  let lastStatus = { ok: false, service: "booting" };
 
   console.log("[DEVICE-AGENT] boot");
 
-  // Start een simpele webserver voor de Portal
-  const server = http.createServer((req, res) => {
-    // Stel CORS in zodat de portal (op poort 3000) mag praten met de agent
+  const server = http.createServer(async (req, res) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
     
     if (req.url === "/api/health") {
+      // Haal de allerlaatste status op
+      const status = await heartbeat(cfg);
       res.writeHead(200, { "Content-Type": "application/json" });
-      res.end(JSON.stringify({ ok: true, service: "device-agent-live" }));
+      res.end(JSON.stringify({ 
+        ok: true, 
+        service: "device-agent-live",
+        details: status 
+      }));
     } else {
       res.writeHead(404);
       res.end();
@@ -26,10 +31,9 @@ export async function main() {
     console.log(`[DEVICE-AGENT] API luistert op http://localhost:${PORT}`);
   });
 
-  // 1x direct heartbeat
+  // 1x direct uitvoeren voor de check
   await heartbeat(cfg);
 
-  // In check-modus stoppen we de server en de app direct
   const runOnce = (process.env.RUN_ONCE || "").toLowerCase();
   if (runOnce === "1" || runOnce === "true" || runOnce === "yes") {
     console.log("[DEVICE-AGENT] RUN_ONCE=1 -> afsluiten");
@@ -37,7 +41,6 @@ export async function main() {
     process.exit(0);
   }
 
-  // Daarna periodiek de heartbeat loggen
   setInterval(() => {
     heartbeat(cfg).catch((e) => console.error("[HEARTBEAT] error", e));
   }, cfg.intervalMs);
