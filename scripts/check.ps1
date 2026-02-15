@@ -17,15 +17,12 @@ Say ""
 Say "== Portal: npm install + build =="
 Push-Location "apps/portal"
 
-# Install is quick if already installed
 npm install | Out-Host
-
-# Build must succeed
 npm run build | Out-Host
 
 Pop-Location
 
-# 2) Device-agent start
+# 2) Device-agent start (non-blocking via RUN_ONCE)
 if (-not (Test-Path "apps/device-agent/package.json")) { Fail "apps/device-agent/package.json niet gevonden." }
 
 Say ""
@@ -33,7 +30,10 @@ Say "== Device-agent: start =="
 Push-Location "apps/device-agent"
 
 npm install | Out-Host
+
+$env:RUN_ONCE = "1"
 npm run start | Out-Host
+Remove-Item Env:\RUN_ONCE -ErrorAction SilentlyContinue
 
 Pop-Location
 
