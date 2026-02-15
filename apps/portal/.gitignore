@@ -17,12 +17,21 @@
 /.next/
 /out/
 
+# turborepo
+/.turbo
+
 # production
 /build
+/dist
 
 # misc
 .DS_Store
+Thumbs.db
 *.pem
+
+# logs
+*.log
+logs/
 
 # debug
 npm-debug.log*
@@ -36,6 +45,11 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+# editors / IDEs
+.vscode/
+.idea/
+*.swp
 
 # typescript
 *.tsbuildinfo
