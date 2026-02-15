@@ -2,19 +2,22 @@ import { getHealth } from "../src/lib/api";
 
 export default async function Home() {
   const health = await getHealth();
-  // We halen de details op die de agent stuurt
   const details = health.details;
 
   return (
     <div className="min-h-screen bg-slate-50 p-4 md:p-12 font-sans">
       <div className="max-w-3xl mx-auto">
-        <header className="mb-10 text-center md:text-left">
-          <h1 className="text-4xl font-black text-slate-900 tracking-tight">Gridbox Dashboard</h1>
-          <p className="text-slate-500 mt-2 text-lg">Live monitoring van de device-agent</p>
+        <header className="mb-10">
+          <h1 className="text-4xl font-black text-slate-900 tracking-tight text-center md:text-left">
+            Gridbox Dashboard
+          </h1>
+          <p className="text-slate-500 mt-2 text-lg text-center md:text-left">
+            Live monitoring van de device-agent
+          </p>
         </header>
 
         <main className="bg-white rounded-3xl shadow-2xl border border-slate-100 p-6 md:p-10">
-          <div className="flex flex-col md:flex-row items-center justify-between mb-10 gap-4">
+          <div className="flex flex-col md:flex-row items-center justify-between mb-10 gap-4 text-center md:text-left">
             <h2 className="text-2xl font-bold text-slate-800">Systeem Status</h2>
             <div className="flex items-center gap-3 bg-slate-50 px-4 py-2 rounded-full border border-slate-100">
               <span className="relative flex h-3 w-3">
@@ -28,32 +31,29 @@ export default async function Home() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <StatCard label="Box ID" value={details?.boxId || "dev-box"} />
-            <StatCard label="Uptime" value={details?.uptime ? `${details.uptime.toFixed(0)}s` : "---"} />
-            <StatCard 
-              label="Geheugen" 
-              value={details?.memory ? `${(details.memory / 1024 / 1024).toFixed(1)} MB` : "---"} 
-            />
-            <StatCard label="API Service" value={health.service} />
+            <div className="p-6 bg-slate-50 rounded-2xl border border-slate-100">
+              <p className="text-xs text-slate-400 uppercase font-black mb-2 tracking-widest text-center md:text-left">Box ID</p>
+              <p className="text-2xl font-mono font-bold text-slate-800 text-center md:text-left">{details?.boxId || "dev-box"}</p>
+            </div>
+            <div className="p-6 bg-slate-50 rounded-2xl border border-slate-100 text-center md:text-left">
+              <p className="text-xs text-slate-400 uppercase font-black mb-2 tracking-widest">Uptime</p>
+              <p className="text-2xl font-mono font-bold text-slate-800">{details?.uptime ? `${details.uptime.toFixed(0)}s` : "---"}</p>
+            </div>
+            <div className="p-6 bg-slate-50 rounded-2xl border border-slate-100 text-center md:text-left">
+              <p className="text-xs text-slate-400 uppercase font-black mb-2 tracking-widest">Geheugen</p>
+              <p className="text-2xl font-mono font-bold text-slate-800">{details?.memory ? `${(details.memory / 1024 / 1024).toFixed(1)} MB` : "---"}</p>
+            </div>
+            <div className="p-6 bg-slate-50 rounded-2xl border border-slate-100 text-center md:text-left">
+              <p className="text-xs text-slate-400 uppercase font-black mb-2 tracking-widest">API Service</p>
+              <p className="text-2xl font-mono font-bold text-slate-800">{health.service}</p>
+            </div>
           </div>
           
-          <footer className="mt-12 pt-6 border-t border-slate-50">
-             <p className="text-center text-xs text-slate-400 font-medium italic">
-               Laatste update: {new Date().toLocaleTimeString()}
-             </p>
+          <footer className="mt-12 pt-6 border-t border-slate-50 text-center text-xs text-slate-400 font-medium italic">
+             Laatste sync: {new Date().toLocaleTimeString()}
           </footer>
         </main>
       </div>
-    </div>
-  );
-}
-
-// Een klein hulp-component voor de blokjes
-function StatCard({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="p-6 bg-slate-50 rounded-2xl border border-slate-100 hover:border-blue-300 hover:bg-white hover:shadow-md transition-all group">
-      <p className="text-xs text-slate-400 uppercase font-black mb-2 tracking-widest group-hover:text-blue-500">{label}</p>
-      <p className="text-2xl font-mono font-bold text-slate-800">{value}</p>
     </div>
   );
 }
