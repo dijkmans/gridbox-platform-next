@@ -1,0 +1,12 @@
+{
+  "name": "gridbox-platform-next",
+  "private": true,
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev:portal": "npm run dev -w @gridbox/portal",
+    "build:portal": "npm run build -w @gridbox/portal",
+    "lint:portal": "npm run lint -w @gridbox/portal"
+  }
+}
