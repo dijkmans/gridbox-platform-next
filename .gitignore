@@ -19,5 +19,11 @@ pnpm-debug.log*
 # misc
 .DS_Store
 
+# local backups
 .cleanup-backup/
+
+# device-agent local config (local only)
+apps/device-agent/config/**
+!apps/device-agent/config/
+!apps/device-agent/config/config.example.json
 

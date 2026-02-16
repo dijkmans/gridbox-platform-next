@@ -34,6 +34,5 @@ async function sendHeartbeat() {
   }
 }
 
-console.log("--- Agent V2 (met afstandsbediening) is gestart ---");
 setInterval(sendHeartbeat, 5000);
 sendHeartbeat();

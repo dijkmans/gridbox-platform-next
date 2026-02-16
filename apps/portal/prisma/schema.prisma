@@ -1,0 +1,41 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model GridBox {
+  id           String   @id
+  site         String?
+  customer     String?
+  boxNumber    String?
+  status       String   @default("OFFLINE")
+  shutterState String   @default("closed")
+  lastSeen     DateTime @default(now())
+  uptime       Int      @default(0)
+  memory       Int      @default(0)
+  signal       Int      @default(100)
+  version      String   @default("1.0.0")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  events       Event[]
+}
+
+model Event {
+  id        String   @id @default(cuid())
+  gridBoxId String
+  type      String
+  message   String
+  createdAt DateTime @default(now())
+  gridBox   GridBox  @relation(fields: [gridBoxId], references: [id])
+}
+
+model Share {
+  id        String   @id @default(cuid())
+  gridBoxId String
+  phone     String
+  createdAt DateTime @default(now())
+}
